@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iam-privesc-lens"
+version = "0.1.0"
+description = "Offline AWS IAM analyzer that finds privilege-escalation paths and explains how to exploit and fix them."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Aabhas Pandey" }]
+keywords = ["aws", "iam", "security", "privilege-escalation", "cloud-security", "audit"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+]
+dependencies = ["rich>=13.0"]
+
+[project.optional-dependencies]
+aws = ["boto3>=1.28"]
+dev = ["pytest>=7.4"]
+
+[project.urls]
+Homepage = "https://github.com/aabhas1221/iam-privesc-lens"
+Issues = "https://github.com/aabhas1221/iam-privesc-lens/issues"
+
+[project.scripts]
+iam-privesc-lens = "iam_privesc_lens.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,487 @@
+{
+  "UserDetailList": [
+    {
+      "Path": "/",
+      "UserName": "dev-alice",
+      "UserId": "AIDADEVALICEXXXX",
+      "Arn": "arn:aws:iam::123456789012:user/dev-alice",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "GroupList": [
+        "developers"
+      ],
+      "UserPolicyList": [],
+      "AttachedManagedPolicies": [],
+      "Tags": []
+    },
+    {
+      "Path": "/",
+      "UserName": "intern-bob",
+      "UserId": "AIDAINTERNBOBXXX",
+      "Arn": "arn:aws:iam::123456789012:user/intern-bob",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "GroupList": [],
+      "UserPolicyList": [
+        {
+          "PolicyName": "self-service-policy",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "EditOwnSandboxPolicy",
+                "Effect": "Allow",
+                "Action": [
+                  "iam:CreatePolicyVersion",
+                  "iam:GetPolicyVersion",
+                  "iam:ListPolicyVersions"
+                ],
+                "Resource": "arn:aws:iam::123456789012:policy/InternSandbox",
+                "Condition": {
+                  "Bool": {
+                    "aws:MultiFactorAuthPresent": "true"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "AttachedManagedPolicies": [
+        {
+          "PolicyName": "InternSandbox",
+          "PolicyArn": "arn:aws:iam::123456789012:policy/InternSandbox"
+        }
+      ],
+      "Tags": []
+    },
+    {
+      "Path": "/",
+      "UserName": "ops-carol",
+      "UserId": "AIDAOPSCAROLXXXX",
+      "Arn": "arn:aws:iam::123456789012:user/ops-carol",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "GroupList": [
+        "ops"
+      ],
+      "UserPolicyList": [],
+      "AttachedManagedPolicies": [],
+      "Tags": [],
+      "PermissionsBoundary": {
+        "PermissionsBoundaryType": "Policy",
+        "PermissionsBoundaryArn": "arn:aws:iam::123456789012:policy/OpsBoundary"
+      }
+    },
+    {
+      "Path": "/",
+      "UserName": "svc-backup",
+      "UserId": "AIDASVCBACKUPXXX",
+      "Arn": "arn:aws:iam::123456789012:user/svc-backup",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "GroupList": [],
+      "UserPolicyList": [
+        {
+          "PolicyName": "backup-access",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "BackupAllBuckets",
+                "Effect": "Allow",
+                "Action": "s3:*",
+                "Resource": "*"
+              },
+              {
+                "Sid": "DecryptBackups",
+                "Effect": "Allow",
+                "Action": [
+                  "kms:Decrypt",
+                  "kms:GenerateDataKey"
+                ],
+                "Resource": "*"
+              }
+            ]
+          }
+        }
+      ],
+      "AttachedManagedPolicies": [],
+      "Tags": []
+    },
+    {
+      "Path": "/",
+      "UserName": "break-glass-admin",
+      "UserId": "AIDABREAKGLASSAD",
+      "Arn": "arn:aws:iam::123456789012:user/break-glass-admin",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "GroupList": [],
+      "UserPolicyList": [],
+      "AttachedManagedPolicies": [
+        {
+          "PolicyName": "AdministratorAccess",
+          "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+        }
+      ],
+      "Tags": []
+    }
+  ],
+  "GroupDetailList": [
+    {
+      "Path": "/",
+      "GroupName": "developers",
+      "GroupId": "AGPADEVELOPERS01",
+      "Arn": "arn:aws:iam::123456789012:group/developers",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "GroupPolicyList": [],
+      "AttachedManagedPolicies": [
+        {
+          "PolicyName": "DeveloperBase",
+          "PolicyArn": "arn:aws:iam::123456789012:policy/DeveloperBase"
+        }
+      ]
+    },
+    {
+      "Path": "/",
+      "GroupName": "ops",
+      "GroupId": "AGPAOPSXXXXXXX01",
+      "Arn": "arn:aws:iam::123456789012:group/ops",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "GroupPolicyList": [
+        {
+          "PolicyName": "ops-iam-delegation",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "DelegatedUserAdmin",
+                "Effect": "Allow",
+                "Action": [
+                  "iam:AttachUserPolicy",
+                  "iam:CreateAccessKey",
+                  "ec2:*"
+                ],
+                "Resource": "*"
+              }
+            ]
+          }
+        }
+      ],
+      "AttachedManagedPolicies": []
+    }
+  ],
+  "RoleDetailList": [
+    {
+      "Path": "/",
+      "RoleName": "ci-deployer",
+      "RoleId": "AROACIDEPLOYERXX",
+      "Arn": "arn:aws:iam::123456789012:role/ci-deployer",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::123456789012:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "InstanceProfileList": [],
+      "RolePolicyList": [
+        {
+          "PolicyName": "ci-deploy",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "DeployFunctions",
+                "Effect": "Allow",
+                "Action": [
+                  "lambda:CreateFunction",
+                  "lambda:InvokeFunction",
+                  "lambda:GetFunction"
+                ],
+                "Resource": "*"
+              },
+              {
+                "Sid": "PassServiceRoles",
+                "Effect": "Allow",
+                "Action": "iam:PassRole",
+                "Resource": "arn:aws:iam::123456789012:role/*"
+              },
+              {
+                "Sid": "Artifacts",
+                "Effect": "Allow",
+                "Action": [
+                  "s3:PutObject",
+                  "s3:GetObject"
+                ],
+                "Resource": "arn:aws:s3:::acme-ci-artifacts/*"
+              }
+            ]
+          }
+        }
+      ],
+      "AttachedManagedPolicies": [],
+      "Tags": [],
+      "RoleLastUsed": {}
+    },
+    {
+      "Path": "/",
+      "RoleName": "lambda-ops-automation",
+      "RoleId": "AROALAMBDAOPSAUT",
+      "Arn": "arn:aws:iam::123456789012:role/lambda-ops-automation",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "InstanceProfileList": [],
+      "RolePolicyList": [],
+      "AttachedManagedPolicies": [
+        {
+          "PolicyName": "AdministratorAccess",
+          "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+        }
+      ],
+      "Tags": [],
+      "RoleLastUsed": {}
+    },
+    {
+      "Path": "/",
+      "RoleName": "app-ec2-role",
+      "RoleId": "AROAAPPEC2ROLEXX",
+      "Arn": "arn:aws:iam::123456789012:role/app-ec2-role",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ec2.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "InstanceProfileList": [
+        {
+          "InstanceProfileName": "app-ec2-profile",
+          "Arn": "arn:aws:iam::123456789012:instance-profile/app-ec2-profile",
+          "Path": "/",
+          "Roles": []
+        }
+      ],
+      "RolePolicyList": [
+        {
+          "PolicyName": "app-runtime",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "ReadConfig",
+                "Effect": "Allow",
+                "Action": [
+                  "s3:GetObject"
+                ],
+                "Resource": "arn:aws:s3:::acme-app-config/*"
+              },
+              {
+                "Sid": "ReadSecrets",
+                "Effect": "Allow",
+                "Action": "secretsmanager:GetSecretValue",
+                "Resource": "*"
+              }
+            ]
+          }
+        }
+      ],
+      "AttachedManagedPolicies": [],
+      "Tags": [],
+      "RoleLastUsed": {}
+    },
+    {
+      "Path": "/",
+      "RoleName": "legacy-partner-access",
+      "RoleId": "AROALEGACYPARTNE",
+      "Arn": "arn:aws:iam::123456789012:role/legacy-partner-access",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "*"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "InstanceProfileList": [],
+      "RolePolicyList": [],
+      "AttachedManagedPolicies": [
+        {
+          "PolicyName": "ReadOnlyAccess",
+          "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"
+        }
+      ],
+      "Tags": [],
+      "RoleLastUsed": {}
+    },
+    {
+      "Path": "/",
+      "RoleName": "readonly-auditor",
+      "RoleId": "AROAREADONLYAUDI",
+      "Arn": "arn:aws:iam::123456789012:role/readonly-auditor",
+      "CreateDate": "2026-01-10T09:00:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::123456789012:root"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "Bool": {
+                "aws:MultiFactorAuthPresent": "true"
+              }
+            }
+          }
+        ]
+      },
+      "InstanceProfileList": [],
+      "RolePolicyList": [],
+      "AttachedManagedPolicies": [
+        {
+          "PolicyName": "ReadOnlyAccess",
+          "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"
+        }
+      ],
+      "Tags": [],
+      "RoleLastUsed": {}
+    }
+  ],
+  "Policies": [
+    {
+      "PolicyName": "DeveloperBase",
+      "PolicyId": "ANPADEVELOPERBAS",
+      "Arn": "arn:aws:iam::123456789012:policy/DeveloperBase",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "IsAttachable": true,
+      "PolicyVersionList": [
+        {
+          "Document": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "ReadCompute",
+                "Effect": "Allow",
+                "Action": [
+                  "ec2:Describe*",
+                  "logs:Get*",
+                  "logs:FilterLogEvents"
+                ],
+                "Resource": "*"
+              },
+              {
+                "Sid": "AppBucketRead",
+                "Effect": "Allow",
+                "Action": [
+                  "s3:GetObject",
+                  "s3:ListBucket"
+                ],
+                "Resource": [
+                  "arn:aws:s3:::acme-app-assets",
+                  "arn:aws:s3:::acme-app-assets/*"
+                ]
+              },
+              {
+                "Sid": "AssumeCiRoles",
+                "Effect": "Allow",
+                "Action": "sts:AssumeRole",
+                "Resource": "arn:aws:iam::123456789012:role/ci-*"
+              }
+            ]
+          },
+          "VersionId": "v1",
+          "IsDefaultVersion": true,
+          "CreateDate": "2026-01-15T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "PolicyName": "InternSandbox",
+      "PolicyId": "ANPAINTERNSANDBO",
+      "Arn": "arn:aws:iam::123456789012:policy/InternSandbox",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "IsAttachable": true,
+      "PolicyVersionList": [
+        {
+          "Document": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "SandboxRead",
+                "Effect": "Allow",
+                "Action": [
+                  "s3:ListAllMyBuckets",
+                  "ec2:DescribeInstances"
+                ],
+                "Resource": "*"
+              }
+            ]
+          },
+          "VersionId": "v1",
+          "IsDefaultVersion": true,
+          "CreateDate": "2026-01-15T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "PolicyName": "OpsBoundary",
+      "PolicyId": "ANPAOPSBOUNDARYX",
+      "Arn": "arn:aws:iam::123456789012:policy/OpsBoundary",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "IsAttachable": true,
+      "PolicyVersionList": [
+        {
+          "Document": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "OpsServicesOnly",
+                "Effect": "Allow",
+                "Action": [
+                  "ec2:*",
+                  "cloudwatch:*",
+                  "logs:*"
+                ],
+                "Resource": "*"
+              }
+            ]
+          },
+          "VersionId": "v1",
+          "IsDefaultVersion": true,
+          "CreateDate": "2026-01-15T10:00:00Z"
+        }
+      ]
+    }
+  ]
+}
